@@ -1,140 +1,66 @@
-/* Shivving (IE8 is not supported, but at least it won't look as awful)
-/* ========================================================================== */
-(function (document) {
-	var
-	head = document.head = document.getElementsByTagName('head')[0] || document.documentElement,
-	elements = 'article aside audio bdi canvas data datalist details figcaption figure footer header hgroup mark meter nav output picture progress section summary time video x'.split(' '),
-	elementsLength = elements.length,
-	elementsIndex = 0,
-	element;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	while (elementsIndex < elementsLength) {
-		element = document.createElement(elements[++elementsIndex]);
-	}
+<title>Ticket Preventa</title>
 
-	element.innerHTML = 'x<style>' +
-		'article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block}' +
-		'audio[controls],canvas,video{display:inline-block}' +
-		'[hidden],audio{display:none}' +
-		'mark{background:#FF0;color:#000}' +
-	'</style>';
+<link rel="stylesheet" href="style.css">
+</head>
 
-	return head.insertBefore(element.lastChild, head.firstChild);
-})(document);
+<body>
 
-/* ========================================================================== */
-/* Helper: detectar modo AppSheet (URL corta con id)
-/* ========================================================================== */
-function esModoAppSheet() {
-	return new URLSearchParams(window.location.search).has("id");
-}
+<div class="ticket">
 
-/* Prototyping
-/* ========================================================================== */
-(function (window, ElementPrototype, ArrayPrototype, polyfill) {
-	function NodeList() { [polyfill] }
-	NodeList.prototype.length = ArrayPrototype.length;
+<div class="header">
+<h1>BODEGA EL CARACOL</h1>
+<h2>PEDIDO PREVENTA</h2>
+</div>
 
-	ElementPrototype.matchesSelector = ElementPrototype.matchesSelector ||
-	ElementPrototype.mozMatchesSelector ||
-	ElementPrototype.msMatchesSelector ||
-	ElementPrototype.oMatchesSelector ||
-	ElementPrototype.webkitMatchesSelector ||
-	function matchesSelector(selector) {
-		return ArrayPrototype.indexOf.call(this.parentNode.querySelectorAll(selector), this) > -1;
-	};
+<div id="info"></div>
 
-	ElementPrototype.ancestorQuerySelectorAll = ElementPrototype.ancestorQuerySelectorAll ||
-	ElementPrototype.mozAncestorQuerySelectorAll ||
-	ElementPrototype.msAncestorQuerySelectorAll ||
-	ElementPrototype.oAncestorQuerySelectorAll ||
-	ElementPrototype.webkitAncestorQuerySelectorAll ||
-	function ancestorQuerySelectorAll(selector) {
-		for (var cite = this, newNodeList = new NodeList; cite = cite.parentElement;) {
-			if (cite.matchesSelector(selector)) ArrayPrototype.push.call(newNodeList, cite);
-		}
-		return newNodeList;
-	};
+<table id="detalle">
+<thead>
+<tr>
+<th>Cant</th>
+<th>Unidad</th>
+<th>Vend</th>
+<th>PUnit</th>
+<th>Sub</th>
+</tr>
+</thead>
 
-	ElementPrototype.ancestorQuerySelector = ElementPrototype.ancestorQuerySelector ||
-	ElementPrototype.mozAncestorQuerySelector ||
-	ElementPrototype.msAncestorQuerySelector ||
-	ElementPrototype.oAncestorQuerySelector ||
-	ElementPrototype.webkitAncestorQuerySelector ||
-	function ancestorQuerySelector(selector) {
-		return this.ancestorQuerySelectorAll(selector)[0] || null;
-	};
-})(this, Element.prototype, Array.prototype);
+<tbody id="productos">
+</tbody>
+</table>
 
-/* ========================================================================== */
-/* Helper Functions
-/* ========================================================================== */
-function generateTableRow() {
-	var emptyColumn = document.createElement('tr');
+<table class="totales">
 
-	emptyColumn.innerHTML =
-		'<td><a class="cut">-</a><span contenteditable></span></td>' +
-		'<td><span contenteditable></span></td>' +
-		'<td><span contenteditable>0</span></td>' +
-		'<td><span contenteditable>0.00</span></td>' +
-		'<td><span>0.00</span></td>';
+<tr>
+<td>Subtotal</td>
+<td id="subtotal" class="right"></td>
+</tr>
 
-	return emptyColumn;
-}
+<tr>
+<td>ISV</td>
+<td id="isv" class="right"></td>
+</tr>
 
-function parseFloatHTML(element) {
-	return parseFloat(element.innerHTML.replace(/[^\d\.\-]+/g, '')) || 0;
-}
+<tr class="total">
+<td>TOTAL</td>
+<td id="total" class="right"></td>
+</tr>
 
-function parsePrice(number) {
-	return number.toFixed(2);
-}
+</table>
 
-/* ========================================================================== */
-/* Update Invoice (DESACTIVADO en modo AppSheet)
-/* ========================================================================== */
-function updateInvoice() {
-	if (esModoAppSheet()) return;
+<div class="gracias">
+*** Gracias por su compra ***
+</div>
 
-	var total = 0;
-	var cells, price, a, i;
+</div>
 
-	for (a = document.querySelectorAll('table.inventory tbody tr'), i = 0; a[i]; ++i) {
-		cells = a[i].querySelectorAll('td span');
+<script src="script.js"></script>
 
-		price = parseFloatHTML(cells[2]) * parseFloatHTML(cells[3]);
-		total += price;
-		cells[4].innerHTML = parsePrice(price);
-	}
-
-	var totalSpan = document.querySelector('table.balance span');
-	if (totalSpan) totalSpan.innerHTML = parsePrice(total);
-}
-
-/* ========================================================================== */
-/* On Content Load
-/* ========================================================================== */
-function onContentLoad() {
-
-	/* 🔒 MODO APP (solo lectura) */
-	if (esModoAppSheet()) {
-		document.querySelectorAll('[contenteditable]').forEach(el => {
-			el.removeAttribute('contenteditable');
-		});
-
-		document.querySelectorAll('.cut,.add').forEach(el => {
-			el.style.display = 'none';
-		});
-
-		return; // no activar eventos de edición
-	}
-
-	updateInvoice();
-
-	if (window.addEventListener) {
-		document.addEventListener('keydown', updateInvoice);
-		document.addEventListener('keyup', updateInvoice);
-	}
-}
-
-window.addEventListener && document.addEventListener('DOMContentLoaded', onContentLoad);
+</body>
+</html>
