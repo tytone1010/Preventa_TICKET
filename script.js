@@ -1,66 +1,45 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+function getParametro(nombre) {
+const url = new URL(window.location.href);
+return url.searchParams.get(nombre);
+}
 
-<title>Ticket Preventa</title>
+const id = getParametro("id");
+const cliente = getParametro("cliente");
+const fecha = getParametro("fecha");
+const total = getParametro("total");
+const isv = getParametro("isv");
+const subtotal = getParametro("subtotal");
 
-<link rel="stylesheet" href="style.css">
-</head>
+document.getElementById("info").innerHTML = `
+<b>ID:</b> ${id}<br>
+<b>Fecha:</b> ${fecha}<br>
+<b>Cliente:</b> ${cliente}<br>
+`;
 
-<body>
+document.getElementById("subtotal").innerText = subtotal;
+document.getElementById("isv").innerText = isv;
+document.getElementById("total").innerText = total;
 
-<div class="ticket">
 
-<div class="header">
-<h1>BODEGA EL CARACOL</h1>
-<h2>PEDIDO PREVENTA</h2>
-</div>
+/* EJEMPLO DE PRODUCTOS */
 
-<div id="info"></div>
+const productos = [
+{cant:2, unidad:"CAJA", vend:"24", precio:"100", sub:"200"},
+{cant:1, unidad:"DOCENA", vend:"12", precio:"50", sub:"50"}
+];
 
-<table id="detalle">
-<thead>
+const tabla = document.getElementById("productos");
+
+productos.forEach(p => {
+
+tabla.innerHTML += `
 <tr>
-<th>Cant</th>
-<th>Unidad</th>
-<th>Vend</th>
-<th>PUnit</th>
-<th>Sub</th>
+<td>${p.cant}</td>
+<td>${p.unidad}</td>
+<td>${p.vend}</td>
+<td class="right">${p.precio}</td>
+<td class="right">${p.sub}</td>
 </tr>
-</thead>
+`;
 
-<tbody id="productos">
-</tbody>
-</table>
-
-<table class="totales">
-
-<tr>
-<td>Subtotal</td>
-<td id="subtotal" class="right"></td>
-</tr>
-
-<tr>
-<td>ISV</td>
-<td id="isv" class="right"></td>
-</tr>
-
-<tr class="total">
-<td>TOTAL</td>
-<td id="total" class="right"></td>
-</tr>
-
-</table>
-
-<div class="gracias">
-*** Gracias por su compra ***
-</div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+});
