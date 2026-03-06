@@ -1,15 +1,21 @@
 const params = new URLSearchParams(window.location.search)
 
 function getParam(nombre){
-  return decodeURIComponent(params.get(nombre) || "")
+  const valor = params.get(nombre)
+  if(!valor) return ""
+  return decodeURIComponent(valor)
 }
 
-document.getElementById("id").innerText = getParam("id")
-document.getElementById("fecha").innerText = getParam("fecha")
-document.getElementById("cliente").innerText = getParam("cliente")
+document.getElementById("id").textContent = getParam("id")
+document.getElementById("fecha").textContent = getParam("fecha")
+document.getElementById("cliente").textContent = getParam("cliente")
 
-document.getElementById("detalle").innerHTML = getParam("detalle")
+document.getElementById("subtotal").textContent = getParam("subtotal")
+document.getElementById("isv").textContent = getParam("isv")
+document.getElementById("total").textContent = getParam("total")
 
-document.getElementById("subtotal").innerText = getParam("subtotal")
-document.getElementById("isv").innerText = getParam("isv")
-document.getElementById("total").innerText = getParam("total")
+const detalleHTML = getParam("detalle")
+
+if(detalleHTML){
+  document.getElementById("detalle").innerHTML = detalleHTML
+}
