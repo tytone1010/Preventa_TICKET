@@ -1,0 +1,15 @@
+{
+ "id":"32e3a337",
+ "cliente":"Maria",
+ "fecha":"5/3/2026",
+ "subtotal":206,
+ "isv":0,
+ "total":206,
+
+ "productos":[
+
+  {"cant":3,"unidad":"UNIDAD","vend":3,"punit":2,"sub":6},
+  {"cant":1,"unidad":"CAJA","vend":12,"punit":16.67,"sub":200}
+
+ ]
+}
