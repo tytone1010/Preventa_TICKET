@@ -1,21 +1,20 @@
-const params = new URLSearchParams(window.location.search)
+const params = new URLSearchParams(window.location.search);
 
-function getParam(nombre){
-  const valor = params.get(nombre)
-  if(!valor) return ""
-  return decodeURIComponent(valor)
+function param(nombre){
+  const v = params.get(nombre);
+  return v ? decodeURIComponent(v) : "";
 }
 
-document.getElementById("id").textContent = getParam("id")
-document.getElementById("fecha").textContent = getParam("fecha")
-document.getElementById("cliente").textContent = getParam("cliente")
+document.getElementById("id").textContent = param("id");
+document.getElementById("fecha").textContent = param("fecha");
+document.getElementById("cliente").textContent = param("cliente");
 
-document.getElementById("subtotal").textContent = getParam("subtotal")
-document.getElementById("isv").textContent = getParam("isv")
-document.getElementById("total").textContent = getParam("total")
+document.getElementById("subtotal").textContent = param("subtotal");
+document.getElementById("isv").textContent = param("isv");
+document.getElementById("total").textContent = param("total");
 
-const detalleHTML = getParam("detalle")
+const detalle = param("detalle");
 
-if(detalleHTML){
-  document.getElementById("detalle").innerHTML = detalleHTML
+if(detalle){
+  document.getElementById("detalle").innerHTML = detalle;
 }
