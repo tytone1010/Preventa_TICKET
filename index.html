@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ticket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket de Venta</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="ticket"></div>
+
+    <div id="ticket">Cargando ticket...</div>
 
     <script>
-        // Usamos una función más segura para obtener el parámetro de la URL
-        function getQueryParam(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
-
-        const ticketHTML = getQueryParam("ticket");
-
-        if (ticketHTML) {
-            // Insertamos el contenido y forzamos el renderizado
-            document.getElementById("ticket").innerHTML = decodeURIComponent(ticketHTML);
+        function renderTicket() {
+            // 1. Capturamos la URL completa
+            const urlString = window.location.href;
             
-            // Auto-impresión opcional (quitar si no se desea)
-            // window.print(); 
-        } else {
-            document.getElementById("ticket").innerHTML = "Error: No se recibió información del ticket o la URL es demasiado larga.";
+            // 2. Extraemos lo que está después de "?ticket=" manualmente por seguridad
+            const part = urlString.split('ticket=')[1];
+            
+            if (part) {
+                // 3. Decodificamos el contenido URI
+                const decodedHTML = decodeURIComponent(part);
+                
+                // 4. Lo inyectamos en el div
+                document.getElementById("ticket").innerHTML = decodedHTML;
+            } else {
+                document.getElementById("ticket").innerHTML = "Error: No se encontró contenido para el ticket.";
+            }
         }
+
+        // Ejecutar al cargar la página
+        window.onload = renderTicket;
     </script>
+
 </body>
 </html>
