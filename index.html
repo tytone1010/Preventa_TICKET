@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-<meta charset="UTF-8">
-<title>Ticket</title>
+    <meta charset="UTF-8">
+    <title>Ticket</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div id="ticket"></div>
 
-<div id="ticket"></div>
+    <script>
+        // Usamos una función más segura para obtener el parámetro de la URL
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
 
-<script>
+        const ticketHTML = getQueryParam("ticket");
 
-const params = new URLSearchParams(window.location.search)
-
-const html = params.get("ticket")
-
-if(html){
-
-document.getElementById("ticket").innerHTML = decodeURIComponent(html)
-
-}
-
-</script>
-
+        if (ticketHTML) {
+            // Insertamos el contenido y forzamos el renderizado
+            document.getElementById("ticket").innerHTML = decodeURIComponent(ticketHTML);
+            
+            // Auto-impresión opcional (quitar si no se desea)
+            // window.print(); 
+        } else {
+            document.getElementById("ticket").innerHTML = "Error: No se recibió información del ticket o la URL es demasiado larga.";
+        }
+    </script>
 </body>
-
 </html>
