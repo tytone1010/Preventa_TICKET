@@ -3,37 +3,27 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Pedido Preventa</title>
-<link rel="stylesheet" href="style.css">
+<title>Ticket</title>
 </head>
 
 <body>
 
-<div class="ticket">
+<div id="ticket"></div>
 
-<h1>BODEGA EL CARACOL</h1>
-<h2>PEDIDO PREVENTA</h2>
+<script>
 
-<div id="info"></div>
+const params = new URLSearchParams(window.location.search)
 
-<table>
-<thead>
-<tr>
-<th>Cant</th>
-<th>Unidad</th>
-<th>Vend</th>
-<th>PUnit</th>
-<th>Sub</th>
-</tr>
-</thead>
+const html = params.get("ticket")
 
-<tbody id="detalle"></tbody>
+if(html){
 
-</table>
+document.getElementById("ticket").innerHTML = decodeURIComponent(html)
 
-</div>
+}
 
-<script src="script.js"></script>
+</script>
 
 </body>
+
 </html>
