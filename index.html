@@ -1,39 +1,105 @@
-const params = new URLSearchParams(window.location.search)
+ <!DOCTYPE html>
+<html>
 
-function valor(nombre){
-return decodeURIComponent(params.get(nombre) || "")
+<head>
+<meta charset="UTF-8">
+<title>Ticket Preventa</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eee;
 }
 
-document.getElementById("id").innerText = valor("id")
-document.getElementById("fecha").innerText = valor("fecha")
-document.getElementById("cliente").innerText = valor("cliente")
+.ticket{
+width:300px;
+margin:auto;
+background:white;
+padding:15px;
+}
 
-document.getElementById("subtotal").innerText = valor("subtotal")
-document.getElementById("isv").innerText = valor("isv")
-document.getElementById("total").innerText = valor("total")
+table{
+width:100%;
+border-collapse:collapse;
+font-size:12px;
+}
 
-const detalleJSON = valor("detalle")
+th{
+border-bottom:1px dashed black;
+}
 
-if(detalleJSON){
+.right{
+text-align:right;
+}
 
-const productos = JSON.parse(detalleJSON)
+.center{
+text-align:center;
+}
 
-let filas=""
+</style>
 
-productos.forEach(p=>{
+</head>
 
-filas += `
+<body>
+
+<div class="ticket">
+
+<h2 style="text-align:center">BODEGA EL CARACOL</h2>
+<h3 style="text-align:center">PEDIDO PREVENTA</h3>
+
+<div id="info"></div>
+
+<br>
+
+<table>
+
+<thead>
+
 <tr>
-<td class="center">${p.cant}</td>
-<td class="center">${p.unidad}</td>
-<td class="center">${p.vend}</td>
-<td class="right">${p.punit}</td>
-<td class="right">${p.sub}</td>
+<th>Cant</th>
+<th>Unidad</th>
+<th>Vend</th>
+<th>PUnit</th>
+<th>Sub</th>
 </tr>
-`
 
-})
+</thead>
 
-document.getElementById("detalle").innerHTML = filas
+<tbody id="detalle"></tbody>
 
-}
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<td>Subtotal</td>
+<td class="right" id="subtotal"></td>
+</tr>
+
+<tr>
+<td>ISV</td>
+<td class="right" id="isv"></td>
+</tr>
+
+<tr>
+<td><b>TOTAL</b></td>
+<td class="right" id="total"></td>
+</tr>
+
+</table>
+
+<br>
+
+<div style="text-align:center">
+*** Gracias por su compra ***
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
