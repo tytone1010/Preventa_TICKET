@@ -1,71 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
+const params = new URLSearchParams(window.location.search)
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+function valor(nombre){
+return decodeURIComponent(params.get(nombre) || "")
+}
 
-<title>Ticket Preventa</title>
+document.getElementById("id").innerText = valor("id")
+document.getElementById("fecha").innerText = valor("fecha")
+document.getElementById("cliente").innerText = valor("cliente")
 
-<link rel="stylesheet" href="style.css">
+document.getElementById("subtotal").innerText = valor("subtotal")
+document.getElementById("isv").innerText = valor("isv")
+document.getElementById("total").innerText = valor("total")
 
-</head>
+const detalleJSON = valor("detalle")
 
-<body>
+if(detalleJSON){
 
-<div class="ticket">
+const productos = JSON.parse(detalleJSON)
 
-<h1>BODEGA EL CARACOL</h1>
-<h2>PEDIDO PREVENTA</h2>
+let filas=""
 
-<div class="info">
-<div><b>ID:</b> <span id="id"></span></div>
-<div><b>Fecha:</b> <span id="fecha"></span></div>
-<div><b>Cliente:</b> <span id="cliente"></span></div>
-</div>
+productos.forEach(p=>{
 
-<table>
-
-<thead>
+filas += `
 <tr>
-<th>Cant</th>
-<th>Unidad</th>
-<th>Vend</th>
-<th>PUnit</th>
-<th>Sub</th>
+<td class="center">${p.cant}</td>
+<td class="center">${p.unidad}</td>
+<td class="center">${p.vend}</td>
+<td class="right">${p.punit}</td>
+<td class="right">${p.sub}</td>
 </tr>
-</thead>
+`
 
-<tbody id="detalle"></tbody>
+})
 
-</table>
+document.getElementById("detalle").innerHTML = filas
 
-<table class="totales">
-
-<tr>
-<td>Subtotal</td>
-<td class="right">L <span id="subtotal"></span></td>
-</tr>
-
-<tr>
-<td>ISV</td>
-<td class="right">L <span id="isv"></span></td>
-</tr>
-
-<tr class="total">
-<td>TOTAL</td>
-<td class="right">L <span id="total"></span></td>
-</tr>
-
-</table>
-
-<div class="footer">
-*** Gracias por su compra ***
-</div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+}
