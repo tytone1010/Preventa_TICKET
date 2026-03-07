@@ -1,37 +1,71 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket de Venta</title>
-    <link rel="stylesheet" href="style.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ticket Preventa</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-    <div id="ticket">Cargando ticket...</div>
+<div class="ticket">
 
-    <script>
-        function renderTicket() {
-            // 1. Capturamos la URL completa
-            const urlString = window.location.href;
-            
-            // 2. Extraemos lo que está después de "?ticket=" manualmente por seguridad
-            const part = urlString.split('ticket=')[1];
-            
-            if (part) {
-                // 3. Decodificamos el contenido URI
-                const decodedHTML = decodeURIComponent(part);
-                
-                // 4. Lo inyectamos en el div
-                document.getElementById("ticket").innerHTML = decodedHTML;
-            } else {
-                document.getElementById("ticket").innerHTML = "Error: No se encontró contenido para el ticket.";
-            }
-        }
+<h1>BODEGA EL CARACOL</h1>
+<h2>PEDIDO PREVENTA</h2>
 
-        // Ejecutar al cargar la página
-        window.onload = renderTicket;
-    </script>
+<div class="info">
+<div><b>ID:</b> <span id="id"></span></div>
+<div><b>Fecha:</b> <span id="fecha"></span></div>
+<div><b>Cliente:</b> <span id="cliente"></span></div>
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>Cant</th>
+<th>Unidad</th>
+<th>Vend</th>
+<th>PUnit</th>
+<th>Sub</th>
+</tr>
+</thead>
+
+<tbody id="detalle"></tbody>
+
+</table>
+
+<table class="totales">
+
+<tr>
+<td>Subtotal</td>
+<td class="right">L <span id="subtotal"></span></td>
+</tr>
+
+<tr>
+<td>ISV</td>
+<td class="right">L <span id="isv"></span></td>
+</tr>
+
+<tr class="total">
+<td>TOTAL</td>
+<td class="right">L <span id="total"></span></td>
+</tr>
+
+</table>
+
+<div class="footer">
+*** Gracias por su compra ***
+</div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
